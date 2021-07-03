@@ -21,7 +21,7 @@ public class ItemDestroy : MonoBehaviour
     void Update()
     {
         //オブジェクトのz座標がunityちゃんのz座標より小さい時、オブジェクトを破棄
-        if (unitychan.transform.position.z > this.gameObject.transform.position.z)
+        if (unitychan.transform.position.z - 15 > this.gameObject.transform.position.z)
         {
             Destroy(this.gameObject);
         }

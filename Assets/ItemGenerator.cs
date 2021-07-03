@@ -25,25 +25,33 @@ public class ItemGenerator : MonoBehaviour
     //アイテムを出すx方向の範囲
     private float posRange = 3.4f;
 
+    //UnityちゃんのZ座標
+    private int unitychanZ = 40;
+
 
     // Start is called before the first frame update
     void Start()
     {
         //unityちゃんのオブジェクトを取得
         this.unitychan = GameObject.Find("unitychan");
+        
+    }
 
-        //一定の距離ごとにアイテム生成
-        for (int i = startPos; i < goalPos; i += 15)
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (unitychan.transform.position.z + 50 > unitychanZ)
         {
             //どのアイテムを出すのかランダムに設定
-            int num = Random.Range(1, 11);
+            int num = Random.Range(-5, 6);
             if (num <= 2)
             {
                 //コーンをx軸方向に一直線に生成
                 for (float j = -1; j <= 1; j += 0.4f)
                 {
                     GameObject cone = Instantiate(conePrefab);
-                    cone.transform.position = new Vector3(4 * j, cone.transform.position.y, i);
+                    cone.transform.position = new Vector3(4 * j, cone.transform.position.y, unitychanZ);
                 }
             }
             else
@@ -60,23 +68,19 @@ public class ItemGenerator : MonoBehaviour
                     {
                         //コイン生成
                         GameObject coin = Instantiate(coinPrefab);
-                        coin.transform.position = new Vector3 (posRange * j, coin.transform.position.y, i + offsetZ);
+                        coin.transform.position = new Vector3(posRange * j, coin.transform.position.y, unitychanZ + offsetZ);
                     }
                     else if (7 <= item && item <= 9)
                     {
                         //車を生成
                         GameObject car = Instantiate(carPrefab);
-                        car.transform.position = new Vector3 (posRange * j, car.transform.position.y, i + offsetZ);
+                        car.transform.position = new Vector3(posRange * j, car.transform.position.y, unitychanZ + offsetZ);
                     }
                 }
             }
+
+            //UnityちゃんのZ座標を更新
+            unitychanZ += 15;
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 }
